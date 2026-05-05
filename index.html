@@ -239,13 +239,13 @@
 
     /* ── QUICK FACTS HEADING ──────────────────────────────────── */
     .qf-heading-wrap {
-      padding: 80px 0;
+      padding: 48px 0 32px;
       display: flex; align-items: center; justify-content: center;
       width: 100%;
     }
     .qf-heading {
-      font-size: 92px; font-weight: 300;
-      letter-spacing: -0.92px; line-height: 120px;
+      font-size: 42px; font-weight: 300;
+      letter-spacing: -0.42px; line-height: 1.2;
       color: var(--text); text-align: center;
     }
 
@@ -418,12 +418,12 @@
 
     /* ── DETAILED GUIDELINES HEADING ───────────────────────────── */
     .dg-heading-wrap {
-      padding: 80px 0 0; width: 100%;
+      padding: 48px 0 0; width: 100%;
     }
     .dg-heading {
-      font-size: 42px; font-weight: 300;
-      letter-spacing: -0.84px; line-height: 1.2;
-      color: var(--text);
+      font-size: 26px; font-weight: 300;
+      letter-spacing: -0.26px; line-height: 1.4;
+      color: var(--tertiary);
     }
 
     /* ── TEXTBLOCK (detailed guidelines) ───────────────────────── */
@@ -917,7 +917,7 @@ function slugify(title) {
 }
 
 function guidanceBtn(titleSlug) {
-  return `<button class="qc-guidance-btn" onclick="const el=document.getElementById('${titleSlug}');if(el){el.scrollIntoView({behavior:'smooth',block:'start'})}">View Detailed Guidance${ICON_ARROW_CIRCLE}</button>`;
+  return `<button class="qc-guidance-btn" onclick="(function(){const el=document.getElementById('${titleSlug}');if(!el)return;const top=el.getBoundingClientRect().top+window.scrollY-32;window.scrollTo({top,behavior:'smooth'});})()">View Detailed Guidance${ICON_ARROW_CIRCLE}</button>`;
 }
 
 // ── Render Results ─────────────────────────────────────────────────
@@ -931,6 +931,20 @@ function renderResults(data) {
   const adu = data.adu || {};
   const garage = data.garage || {};
   const basement = data.basement || {};
+
+  // Pre-collect available detail section slugs so quick-card buttons
+  // only appear when the target section actually exists, with fuzzy fallback.
+  const detailSlugs = new Set((bd.detailedGuidelines || []).map(g => slugify(g.title)));
+  if (bd.whatYouCannotDo && bd.whatYouCannotDo.length) detailSlugs.add(slugify('What you cannot do'));
+
+  function guidanceBtnFor(title) {
+    const slug = slugify(title);
+    if (detailSlugs.has(slug)) return guidanceBtn(slug);
+    // Fuzzy: any keyword (>3 chars) from the quick-card title appears in a detail slug
+    const keywords = title.toLowerCase().replace(/[^a-z0-9 ]/g, '').split(/\s+/).filter(k => k.length > 3);
+    const match = [...detailSlugs].find(s => keywords.some(k => s.includes(k)));
+    return match ? guidanceBtn(match) : '';
+  }
 
   let html = '';
 
@@ -993,7 +1007,7 @@ function renderResults(data) {
             ${iconBox(ICONS.maxsize)}
             <div style="display:flex;flex-direction:column;gap:8px;">
               <p class="qc-title">Max Home Size</p>
-              ${guidanceBtn(slugify('Max Home Size'))}
+              ${guidanceBtnFor('Max Home Size')}
             </div>
           </div>
           <div class="qc-right">
@@ -1007,7 +1021,7 @@ function renderResults(data) {
     `;
   }
 
-  // ── Setbacks card (full-width: map left, values right)
+  // ── Setbacks card (full-width: icon+title left, values right)
   if (sb.front || sb.side || sb.rear) {
     const setbackItems = [
       sb.front ? { label: 'Front', val: sb.front } : null,
@@ -1015,33 +1029,17 @@ function renderResults(data) {
       sb.rear  ? { label: 'Rear',  val: sb.rear  } : null,
     ].filter(Boolean);
 
-    const mapSVG = `
-      <svg width="260" height="320" viewBox="0 0 260 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="10" width="240" height="300" rx="4" fill="#dfcbc5" stroke="#c8b5af" stroke-width="1"/>
-        <rect x="50" y="60" width="160" height="200" rx="2" fill="#c8b5af" stroke="#b09a93" stroke-width="1"/>
-        <rect x="80" y="90" width="100" height="140" rx="2" fill="#efe5e2"/>
-        <line x1="50" y1="60" x2="10" y2="10" stroke="#b09a93" stroke-width="0.75" stroke-dasharray="4 3"/>
-        <line x1="210" y1="60" x2="250" y2="10" stroke="#b09a93" stroke-width="0.75" stroke-dasharray="4 3"/>
-        <line x1="50" y1="260" x2="10" y2="310" stroke="#b09a93" stroke-width="0.75" stroke-dasharray="4 3"/>
-        <line x1="210" y1="260" x2="250" y2="310" stroke="#b09a93" stroke-width="0.75" stroke-dasharray="4 3"/>
-        <text x="130" y="175" font-family="Inter,sans-serif" font-size="12" fill="#433d39" text-anchor="middle" font-weight="300">Property</text>
-      </svg>
-    `;
-
     html += `
       <div class="qc">
         <div class="qc-full">
-          <div class="qc-left" style="padding:40px 80px;">
-            ${mapSVG}
-          </div>
-          <div class="qc-right" style="gap:48px;">
-            <div style="display:flex;flex-direction:column;gap:32px;">
-              ${iconBox(ICONS.setbacks)}
-              <div style="display:flex;flex-direction:column;gap:8px;">
-                <p class="qc-title">Setbacks</p>
-                ${guidanceBtn(slugify('Setbacks'))}
-              </div>
+          <div class="qc-left">
+            ${iconBox(ICONS.setbacks)}
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <p class="qc-title">Setbacks</p>
+              ${guidanceBtnFor('Setbacks')}
             </div>
+          </div>
+          <div class="qc-right" style="justify-content:center;">
             <div class="qc-setbacks-list">
               ${setbackItems.map(item => `
                 <div class="qc-setback">
@@ -1084,7 +1082,7 @@ function renderResults(data) {
           ${iconBox(ICONS.height)}
           <div style="display:flex;flex-direction:column;gap:8px;">
             <p class="qc-title">Max Height</p>
-            ${guidanceBtn(slugify('Max Height'))}
+            ${guidanceBtnFor('Max Height')}
           </div>
         </div>
         <div class="qc-half-content">
@@ -1112,7 +1110,7 @@ function renderResults(data) {
           ${iconBox(ICONS.parking)}
           <div style="display:flex;flex-direction:column;gap:8px;">
             <p class="qc-title">Parking Required</p>
-            ${guidanceBtn(slugify('Parking Required'))}
+            ${guidanceBtnFor('Parking Required')}
           </div>
         </div>
         <div class="qc-half-content">
@@ -1132,7 +1130,7 @@ function renderResults(data) {
           ${iconBox(ICONS.adu)}
           <div style="display:flex;flex-direction:column;gap:8px;">
             <p class="qc-title">ADU Allowed</p>
-            ${guidanceBtn(slugify('ADU Allowed'))}
+            ${guidanceBtnFor('ADU Allowed')}
           </div>
         </div>
         <div class="qc-half-content">
@@ -1162,7 +1160,7 @@ function renderResults(data) {
           ${iconBox(ICONS.garage)}
           <div style="display:flex;flex-direction:column;gap:8px;">
             <p class="qc-title">Garage Exemption</p>
-            ${guidanceBtn(slugify('Garage Exemption'))}
+            ${guidanceBtnFor('Garage Exemption')}
           </div>
         </div>
         <div class="qc-half-content">
@@ -1179,7 +1177,7 @@ function renderResults(data) {
           ${iconBox(ICONS.basement)}
           <div style="display:flex;flex-direction:column;gap:8px;">
             <p class="qc-title">Basement</p>
-            ${guidanceBtn(slugify('Basement'))}
+            ${guidanceBtnFor('Basement')}
           </div>
         </div>
         <div class="qc-half-content">

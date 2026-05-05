@@ -25,7 +25,11 @@
       "Bash(npm list *)",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(npm install *)",
+      "Bash(sed -i '' \"s/guidanceBtn\\(slugify\\('/guidanceBtnFor\\('/g\" /Users/luke/dg/index.html)",
+      "Bash(sed -i '' \"s/guidanceBtnFor\\('\\\\\\(.*\\\\\\)'\\)\\)/guidanceBtnFor\\('\\\\1'\\)/g\" /Users/luke/dg/index.html)",
+      "Bash(vercel --prod)"
     ]
   }
 }
