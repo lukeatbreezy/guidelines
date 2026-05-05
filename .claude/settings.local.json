@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "mcp__aee859ea-29d3-4bad-9a32-c265cc5c065e__get_design_context",
+      "mcp__aee859ea-29d3-4bad-9a32-c265cc5c065e__get_metadata",
+      "mcp__aee859ea-29d3-4bad-9a32-c265cc5c065e__get_screenshot",
+      "Bash(curl -s \"https://www.figma.com/api/mcp/asset/6cdb9520-964a-4e3d-a61a-b3dfb89733c9\" -o /tmp/scenarios.png)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(curl -s \"https://www.figma.com/api/mcp/asset/4518acb7-1533-40a4-a34e-0a947535241e\" -o /tmp/s1a.png)",
+      "Bash(netlify status *)",
+      "Bash(netlify login *)",
+      "Bash(npx vercel *)",
+      "Bash(curl -s \"https://www.figma.com/api/mcp/asset/8c0abcbe-5a39-46ca-8d5b-db18ee6b6563\")",
+      "mcp__Claude_in_Chrome__navigate",
+      "mcp__Claude_in_Chrome__computer",
+      "mcp__Claude_in_Chrome__javascript_tool",
+      "mcp__Claude_in_Chrome__read_console_messages",
+      "mcp__Claude_in_Chrome__browser_batch",
+      "mcp__aee859ea-29d3-4bad-9a32-c265cc5c065e__get_variable_defs",
+      "mcp__aee859ea-29d3-4bad-9a32-c265cc5c065e__use_figma",
+      "mcp__Figma__get_design_context",
+      "mcp__Figma__get_screenshot",
+      "Bash(vercel --version)",
+      "Bash(npm list *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
