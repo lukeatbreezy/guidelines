@@ -239,14 +239,14 @@
 
     /* ── QUICK FACTS HEADING ──────────────────────────────────── */
     .qf-heading-wrap {
-      padding: 48px 0 32px;
-      display: flex; align-items: center; justify-content: center;
+      padding: 40px 0;
+      display: flex; align-items: flex-start; justify-content: flex-start;
       width: 100%;
     }
     .qf-heading {
-      font-size: 42px; font-weight: 300;
-      letter-spacing: -0.42px; line-height: 1.2;
-      color: var(--text); text-align: center;
+      font-size: 26px; font-weight: 300;
+      letter-spacing: -0.26px; line-height: 1.2;
+      color: var(--text);
     }
 
     /* ── QUICK CARDS ───────────────────────────────────────────── */
@@ -255,42 +255,53 @@
     .qc {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 32px;
+      border-radius: 24px;
       padding: 8px;
       overflow: hidden;
     }
 
-    /* Full-width 2-column layout */
-    .qc-full { display: flex; gap: 32px; align-items: stretch; }
+    /* Full-width 5-column grid layout (left=2col, right=3col) */
+    .qc-full {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
 
     .qc-left {
-      flex: 1; min-width: 0;
-      border-radius: 24px;
-      padding: 48px;
+      grid-column: 1 / span 2;
+      background: var(--accent-light);
+      border-radius: 20px;
+      padding: 32px;
       display: flex; flex-direction: column;
       gap: 32px; align-items: flex-start;
     }
 
+    /* Icon + More button row in left panel */
+    .qc-left-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; width: 100%;
+    }
+
     .qc-right {
-      flex: 1; min-width: 0;
-      padding: 48px;
+      grid-column: 3 / span 3;
+      padding: 32px;
       display: flex; flex-direction: column;
-      gap: 32px; align-items: flex-start;
+      gap: 24px; align-items: flex-start;
     }
 
     /* Half-width card (stacked: header top, content bottom) */
     .qc-half { display: flex; flex-direction: column; }
 
     .qc-half-top {
-      border-radius: 24px;
-      padding: 48px;
+      background: var(--accent-light);
+      border-radius: 20px;
+      padding: 32px;
       display: flex; flex-direction: column;
-      gap: 32px; align-items: flex-start; justify-content: center;
+      gap: 32px; align-items: flex-start;
       width: 100%;
     }
 
     .qc-half-content {
-      padding: 48px;
+      padding: 32px;
       display: flex; flex-direction: column;
       gap: 32px; align-items: flex-start;
       width: 100%;
@@ -310,45 +321,55 @@
       background: linear-gradient(to bottom, #f7f6f5, #f4eeec);
     }
 
-    /* Card title — quick cards (42px light, -0.42px tracking) */
+    /* Card title — quick cards (38px light, -0.38px tracking) */
     .qc-title {
-      font-size: 42px; font-weight: 300;
-      letter-spacing: -0.42px; line-height: 1.2;
+      font-size: 38px; font-weight: 300;
+      letter-spacing: -0.38px; line-height: 1.2;
       color: var(--text);
     }
 
-    /* Card title — detail card left panel (42px light, -0.84px tracking) */
+    /* Card title — detail card left panel (38px light, -0.76px tracking) */
     .dg-title {
-      font-size: 42px; font-weight: 300;
-      letter-spacing: -0.84px; line-height: 1.2;
+      font-size: 38px; font-weight: 300;
+      letter-spacing: -0.76px; line-height: 1.2;
       color: var(--text);
     }
 
-    /* Display number (80px light) */
+    /* Display number (64px light) */
     .qc-num {
-      font-size: 80px; font-weight: 300;
-      letter-spacing: -0.8px; line-height: 1.2;
+      font-size: 64px; font-weight: 300;
+      letter-spacing: -0.64px; line-height: 1.2;
       color: var(--text); white-space: nowrap;
     }
 
     /* Display unit */
     .qc-unit {
-      font-size: 42px; font-weight: 400;
-      letter-spacing: -0.42px;
+      font-size: 38px; font-weight: 300;
+      letter-spacing: -0.38px;
       color: var(--text);
       align-self: flex-end;
-      padding-bottom: 12px;
+      padding-bottom: 8px;
       display: inline-block; white-space: nowrap;
     }
-    .qc-unit sup { font-size: 27px; line-height: 0; vertical-align: super; }
+    .qc-unit sup { font-size: 25px; line-height: 0; vertical-align: super; }
 
     /* Number+unit row */
-    .qc-num-row { display: flex; align-items: flex-start; gap: 8px; }
+    .qc-num-row { display: flex; align-items: flex-start; gap: 4px; }
+
+    /* "More" button — top-right of left panel */
+    .qc-more-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: none; border: none; cursor: pointer;
+      font-family: inherit; font-size: 16px; font-weight: 700;
+      letter-spacing: -0.32px; line-height: 1.2;
+      color: #87706a; padding: 10px 0; flex-shrink: 0;
+    }
+    .qc-more-btn:hover { opacity: 0.75; }
 
     /* Subtitle / label under numbers */
     .qc-label {
       font-size: 16px; font-weight: 400;
-      line-height: 24px; color: var(--tertiary);
+      line-height: 24px; letter-spacing: 0.16px; color: var(--tertiary);
     }
 
     /* Body large (summary text) */
@@ -458,7 +479,7 @@
     }
     .dg-col {
       flex: 1; display: flex; flex-direction: column;
-      gap: 32px; padding: 48px;
+      gap: 32px; padding: 32px;
     }
     .dg-col-sep {
       width: 1px; background: var(--border); flex-shrink: 0; align-self: stretch;
@@ -470,7 +491,7 @@
       overflow: clip; border-radius: 24px;
     }
     .detail-vert-top {
-      padding: 48px;
+      padding: 32px;
       display: flex; flex-direction: column;
       gap: 32px; width: 100%;
     }
@@ -487,17 +508,19 @@
     /* ── RESPONSIVE ────────────────────────────────────────────── */
     @media (max-width: 960px) {
       .results-inner { padding: 48px 24px 80px; }
-      .qc-full { flex-direction: column; gap: 0; }
+      .qc-full { grid-template-columns: 1fr; }
+      .qc-left { grid-column: 1; }
+      .qc-right { grid-column: 1; }
       .qc-grid { grid-template-columns: 1fr; }
-      .qc-num { font-size: 56px; }
-      .qc-title, .dg-title { font-size: 32px; }
-      .qf-heading { font-size: 56px; line-height: 1.2; }
+      .qc-num { font-size: 48px; }
+      .qc-title, .dg-title { font-size: 28px; }
+      .qf-heading { font-size: 20px; }
       .dg-subtitle { font-size: 20px; }
-      .qc-left, .qc-right, .qc-half-top, .qc-half-content { padding: 32px; }
-      .detail-vert-top { padding: 32px; }
+      .qc-left, .qc-right, .qc-half-top, .qc-half-content { padding: 24px; }
+      .detail-vert-top { padding: 24px; }
       .dg-cols { flex-direction: column; }
       .detail-vert-content .dg-cols { flex-direction: column; }
-      .dg-col { padding: 32px; }
+      .dg-col { padding: 24px; }
       .dg-col-sep { width: 100%; height: 1px; align-self: auto; }
     }
   </style>
@@ -912,6 +935,18 @@ function iconBox(icon) {
   return `<div class="qc-icon">${icon}</div>`;
 }
 
+const ICON_DOTS_THREE = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><circle cx="8.5" cy="12" r="1.25" fill="currentColor"/><circle cx="12" cy="12" r="1.25" fill="currentColor"/><circle cx="15.5" cy="12" r="1.25" fill="currentColor"/></svg>`;
+
+function moreBtn(slug) {
+  const action = slug ? `onclick="(function(){const el=document.getElementById('${slug}');if(!el)return;const top=el.getBoundingClientRect().top+window.scrollY-32;window.scrollTo({top,behavior:'smooth'});})() "` : '';
+  return `<button class="qc-more-btn" ${action}>More${ICON_DOTS_THREE}</button>`;
+}
+
+// Helper: left panel header row (icon + more button)
+function leftHeader(icon, slug) {
+  return `<div class="qc-left-header">${iconBox(icon)}${moreBtn(slug)}</div>`;
+}
+
 function slugify(title) {
   return 'detail-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
@@ -972,7 +1007,7 @@ function renderResults(data) {
       <div class="qc">
         <div class="qc-full">
           <div class="qc-left">
-            ${iconBox(ICONS.summary)}
+            ${leftHeader(ICONS.summary, '')}
             <p class="qc-title">Summary</p>
           </div>
           <div class="qc-right">
@@ -1004,50 +1039,14 @@ function renderResults(data) {
       <div class="qc">
         <div class="qc-full">
           <div class="qc-left">
-            ${iconBox(ICONS.maxsize)}
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <p class="qc-title">Max Home Size</p>
-              ${guidanceBtnFor('Max Home Size')}
-            </div>
+            ${leftHeader(ICONS.maxsize, guidanceBtnFor('Max Home Size') ? slugify('Max Home Size') : '')}
+            <p class="qc-title">Max Home Size</p>
           </div>
           <div class="qc-right">
             ${current != null ? numBlock(current, 'Current') : ''}
             ${max != null ? numBlock(max, ms.potentialType || 'Maximum') : ''}
-            ${additional != null ? numBlock(additional, 'Additional capacity') : ''}
+            ${additional != null ? numBlock(additional, ms.additionalCapacityLabel || 'Additional capacity') : ''}
             ${ms.basementNote ? `<p class="qc-body">${ms.basementNote}</p>` : ''}
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  // ── Setbacks card (full-width: icon+title left, values right)
-  if (sb.front || sb.side || sb.rear) {
-    const setbackItems = [
-      sb.front ? { label: 'Front', val: sb.front } : null,
-      sb.side  ? { label: 'Side',  val: sb.side  } : null,
-      sb.rear  ? { label: 'Rear',  val: sb.rear  } : null,
-    ].filter(Boolean);
-
-    html += `
-      <div class="qc">
-        <div class="qc-full">
-          <div class="qc-left">
-            ${iconBox(ICONS.setbacks)}
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <p class="qc-title">Setbacks</p>
-              ${guidanceBtnFor('Setbacks')}
-            </div>
-          </div>
-          <div class="qc-right" style="justify-content:center;">
-            <div class="qc-setbacks-list">
-              ${setbackItems.map(item => `
-                <div class="qc-setback">
-                  <span class="qc-setback-label">${item.label}</span>
-                  <span class="qc-setback-val">${item.val}</span>
-                </div>
-              `).join('')}
-            </div>
           </div>
         </div>
       </div>
@@ -1059,7 +1058,7 @@ function renderResults(data) {
     <div class="qc">
       <div class="qc-half">
         <div class="qc-half-top">
-          ${iconBox(ICONS.lot)}
+          ${leftHeader(ICONS.lot, '')}
           <p class="qc-title">Lot Size</p>
         </div>
         <div class="qc-half-content">
@@ -1079,11 +1078,8 @@ function renderResults(data) {
     <div class="qc">
       <div class="qc-half">
         <div class="qc-half-top">
-          ${iconBox(ICONS.height)}
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <p class="qc-title">Max Height</p>
-            ${guidanceBtnFor('Max Height')}
-          </div>
+          ${leftHeader(ICONS.height, guidanceBtnFor('Max Height') ? slugify('Max Height') : '')}
+          <p class="qc-title">Max Height</p>
         </div>
         <div class="qc-half-content">
           <div style="display:flex;flex-direction:column;gap:16px;">
@@ -1107,11 +1103,8 @@ function renderResults(data) {
     <div class="qc">
       <div class="qc-half">
         <div class="qc-half-top">
-          ${iconBox(ICONS.parking)}
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <p class="qc-title">Parking Required</p>
-            ${guidanceBtnFor('Parking Required')}
-          </div>
+          ${leftHeader(ICONS.parking, guidanceBtnFor('Parking Required') ? slugify('Parking Required') : '')}
+          <p class="qc-title">Parking Required</p>
         </div>
         <div class="qc-half-content">
           <div style="display:flex;flex-direction:column;gap:16px;">
@@ -1127,11 +1120,8 @@ function renderResults(data) {
     <div class="qc">
       <div class="qc-half">
         <div class="qc-half-top">
-          ${iconBox(ICONS.adu)}
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <p class="qc-title">ADU Allowed</p>
-            ${guidanceBtnFor('ADU Allowed')}
-          </div>
+          ${leftHeader(ICONS.adu, guidanceBtnFor('ADU Allowed') ? slugify('ADU Allowed') : '')}
+          <p class="qc-title">ADU Allowed</p>
         </div>
         <div class="qc-half-content">
           <div style="display:flex;flex-direction:column;gap:16px;">
@@ -1157,11 +1147,8 @@ function renderResults(data) {
     <div class="qc">
       <div class="qc-half">
         <div class="qc-half-top">
-          ${iconBox(ICONS.garage)}
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <p class="qc-title">Garage Exemption</p>
-            ${guidanceBtnFor('Garage Exemption')}
-          </div>
+          ${leftHeader(ICONS.garage, guidanceBtnFor('Garage Exemption') ? slugify('Garage Exemption') : '')}
+          <p class="qc-title">Garage Exemption</p>
         </div>
         <div class="qc-half-content">
           <p class="qc-label">${garage.rule}</p>
@@ -1174,11 +1161,8 @@ function renderResults(data) {
     <div class="qc">
       <div class="qc-half">
         <div class="qc-half-top">
-          ${iconBox(ICONS.basement)}
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <p class="qc-title">Basement</p>
-            ${guidanceBtnFor('Basement')}
-          </div>
+          ${leftHeader(ICONS.basement, guidanceBtnFor('Basement') ? slugify('Basement') : '')}
+          <p class="qc-title">Basement</p>
         </div>
         <div class="qc-half-content">
           <p class="qc-label">${basement.rule}</p>
