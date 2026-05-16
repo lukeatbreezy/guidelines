@@ -28,7 +28,6 @@ function DataRow({ k, v, mono = false, accent = null }) {
       <div className={"datarow-v " + (mono ? "is-mono " : "") + (accent ? "is-accent" : "")}
       style={accent ? { color: accent } : undefined}>{v}</div>
     </div>);
-
 }
 
 function PropertyData({ p }) {
@@ -42,7 +41,6 @@ function PropertyData({ p }) {
       <DataRow k="Style" v={p.style} />
       <DataRow k="Condition" v={p.condition.label} accent={CONDITION_COLOR[p.condition.label]} />
     </div>);
-
 }
 
 // ---------- subject ----------
@@ -78,7 +76,6 @@ function Subject({ p, tweaks }) {
         </div>
       }
     </div>);
-
 }
 
 function VolBar({ vol }) {
@@ -87,7 +84,6 @@ function VolBar({ vol }) {
     <span className="vol-bar" title={`Volatility ${(vol * 100).toFixed(0)}%`}>
       {[1, 2, 3, 4, 5].map((i) => <i key={i} className={i <= lvl ? "on" : ""} />)}
     </span>);
-
 }
 
 // ---------- bar chart ----------
@@ -122,7 +118,6 @@ function CompChart({ comps, highlightId, onHighlight }) {
     return Math.max(...all) * 1.08;
   }, [series]);
 
-  // y-axis ticks (4 ticks)
   const ticks = useMemo(() => {
     const t = [];
     for (let i = 0; i <= 4; i++) t.push(max * i / 4);
@@ -139,7 +134,7 @@ function CompChart({ comps, highlightId, onHighlight }) {
             role="tab"
             className={"chart-tab " + (metric === m.key ? "is-on" : "")}
             onClick={() => setMetric(m.key)}>
-            
+
               {m.label}
             </button>
           )}
@@ -172,7 +167,7 @@ function CompChart({ comps, highlightId, onHighlight }) {
                 onMouseEnter={() => onHighlight(c.id)}
                 onMouseLeave={() => onHighlight(null)}
                 onClick={() => onHighlight(c.id)} style={{ width: "52px", gap: "2px", alignItems: "flex-end", padding: "0px" }}>
-                
+
                 {metric === "sale_vs_list" ?
                 <>
                     <div className="chart-bar sale" style={{ height: `${s.a / max * 100}%`, borderRadius: "99990px", width: "14px" }}>
@@ -207,11 +202,12 @@ function diffSpec(sale, list) {
   return { text: `${window.fmtMoney(d)} (${pct.toFixed(1)}%) under list`, cls: "under" };
 }
 
-function Comp({ comp, n, tweaks, highlighted, onMouseEnter, onMouseLeave }) {
+function Comp({ comp, n, tweaks, highlighted, onMouseEnter, onMouseLeave, onExclude, isNew, submitted }) {
   const dx = diffSpec(comp.salePrice, comp.listPrice);
   return (
-    <div className={"comp " + (highlighted ? "is-hi" : "")}
+    <div className={"comp " + (highlighted ? "is-hi " : "") + (isNew ? "comp-new" : "")}
     onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      {isNew && <div className="comp-suggested">↑ Closer match</div>}
       <div className="comp-num">#{String(n).padStart(2, "0")}</div>
 
       <div className="comp-priceblock">
@@ -255,6 +251,12 @@ function Comp({ comp, n, tweaks, highlighted, onMouseEnter, onMouseLeave }) {
         <span>SOLD {fmtDate(comp.saleDate)}</span>
         <span>{comp.dom} DOM</span>
       </div>
+
+      {!submitted &&
+        <button className="comp-exclude" onClick={(e) => { e.stopPropagation(); onExclude(); }}>
+          ✕ not a comp
+        </button>
+      }
     </div>);
 
 }
@@ -409,12 +411,25 @@ function App() {
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
 
   const [round, setRound] = useState(() => window.Valuation.buildRound());
+  // null = use round.comps; set to array when user excludes comps
+  const [activeComps, setActiveComps] = useState(null);
+  const [newCompIds, setNewCompIds] = useState(new Set());
   const [roundIdx, setRoundIdx] = useState(1);
   const [totalScore, setTotalScore] = useState(0);
   const [history, setHistory] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [highlightId, setHighlightId] = useState(null);
 
+  const displayComps = useMemo(() => activeComps || round.comps, [activeComps, round]);
+
+  // Live estimate recalculated whenever active comps change
+  const liveEstimate = useMemo(() => {
+    if (!displayComps.length) return round.estimate;
+    const { estimate: est } = window.Valuation.recalculate(round.subject, displayComps);
+    return est;
+  }, [displayComps, round]);
+
+  // Slider bounds stay fixed to the original round comps to keep the track stable
   const [minBound, maxBound] = useMemo(() => {
     const prices = round.comps.map((c) => c.salePrice);
     const lo = Math.floor(Math.min(...prices) * 0.7 / 25000) * 25000;
@@ -443,9 +458,20 @@ function App() {
     return { widthPct, ...confidenceLabel(widthPct) };
   }, [low, mid, high]);
 
+  function excludeComp(id) {
+    if (revealed) return;
+    const current = activeComps || round.comps;
+    const remaining = current.filter(c => c.id !== id);
+    const usedIds = current.map(c => c.id);
+    const replacement = window.Valuation.makeReplacementComp(round.subject, usedIds);
+    setActiveComps([...remaining, replacement]);
+    setNewCompIds(prev => new Set([...prev, replacement.id]));
+    if (highlightId === id) setHighlightId(null);
+  }
+
   function submit() {
-    const score = window.Valuation.scoreFor(mid, low, high, round.estimate);
-    const result = { mid, low, high, actual: round.estimate, score };
+    const score = window.Valuation.scoreFor(mid, low, high, liveEstimate);
+    const result = { mid, low, high, actual: liveEstimate, score };
     setLastResult(result);
     setTotalScore((s) => s + score.total);
     setHistory((h) => [...h, result]);
@@ -458,18 +484,24 @@ function App() {
       setGameOver(true);
       return;
     }
+    const newRound = window.Valuation.buildRound();
     setRoundIdx((n) => n + 1);
-    setRound(window.Valuation.buildRound());
+    setRound(newRound);
+    setActiveComps(null);
+    setNewCompIds(new Set());
     setRevealed(false);
     setLastResult(null);
     setHighlightId(null);
   }
 
   function playAgain() {
+    const newRound = window.Valuation.buildRound();
     setRoundIdx(1);
     setTotalScore(0);
     setHistory([]);
-    setRound(window.Valuation.buildRound());
+    setRound(newRound);
+    setActiveComps(null);
+    setNewCompIds(new Set());
     setRevealed(false);
     setLastResult(null);
     setGameOver(false);
@@ -495,7 +527,7 @@ function App() {
           i === history.length ? "current" : "")
           }
           title={i < history.length ? `Round ${i + 1}: ${history[i].score.total} pts` : `Round ${i + 1}`} style={{ opacity: "1", color: "rgba(255, 255, 255, 0)", backgroundColor: "rgba(255, 255, 255, 0)", borderWidth: "0px 0px 0px 1px", borderRadius: "99990px", height: "18px" }}>
-            
+
               {i < history.length && history[i].score.errPct <= 5 && <i className="pip-dot good" style={{ fontSize: "24px", height: "17px", width: "17px" }} />}
               {i < history.length && history[i].score.errPct > 5 && <i className="pip-dot bad" />}
             </span>
@@ -510,16 +542,16 @@ function App() {
           <div className="section-head">
             <h3 className="section-title">Comps
 </h3>
-            <div className="section-tag">{COMP_COUNT} records</div>
+            <div className="section-tag">{displayComps.length} records</div>
           </div>
 
-          <CompChart comps={round.comps}
+          <CompChart comps={displayComps}
           highlightId={highlightId}
           onHighlight={setHighlightId} />
-          
+
 
           <div className="comps">
-            {round.comps.map((c, i) =>
+            {displayComps.map((c, i) =>
             <Comp
               key={c.id}
               comp={c}
@@ -527,7 +559,10 @@ function App() {
               tweaks={tweaks}
               highlighted={highlightId === c.id}
               onMouseEnter={() => setHighlightId(c.id)}
-              onMouseLeave={() => setHighlightId(null)} />
+              onMouseLeave={() => setHighlightId(null)}
+              onExclude={() => excludeComp(c.id)}
+              isNew={newCompIds.has(c.id)}
+              submitted={revealed} />
 
             )}
           </div>
@@ -546,7 +581,7 @@ function App() {
               onChange={(l, m, h) => {setLow(l);setMid(m);setHigh(h);}}
               trueValue={revealed && lastResult ? lastResult.actual : null}
               revealed={revealed} />
-            
+
           </div>
           <div className="dock-readouts">
             <div className="confbar">
@@ -591,7 +626,6 @@ function App() {
         </TweakSection>
       </TweaksPanel>
     </div>);
-
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);

@@ -1100,3 +1100,39 @@ body::before {
   .pdata { grid-template-columns: repeat(2, 1fr); }
   .masthead, .dataline, .content { padding-left: 16px; padding-right: 16px; }
 }
+
+/* ---------------- comp exclude + suggested ---------------- */
+
+.comp-suggested {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--good);
+  margin-bottom: 2px;
+}
+
+.comp-exclude {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--ink-mute);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 0 0;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: color 0.12s;
+}
+.comp-exclude:hover { color: var(--bad); }
+
+.comp-new {
+  animation: compFadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes compFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}

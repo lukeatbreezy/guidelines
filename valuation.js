@@ -245,9 +245,33 @@
     return { estimate: Math.round(est / 1000) * 1000, stdev: Math.round(stdev / 1000) * 1000, adj };
   }
 
+  // Quality filter: within 25% ppsf, ±1 bed/bath, adjacent condition
+  function isQualityComp(comp, subject) {
+    const subjectPpsf = subject._baseValue / subject.sqft;
+    if (comp.ppsf < subjectPpsf * 0.75 || comp.ppsf > subjectPpsf * 1.25) return false;
+    if (Math.abs(comp.beds - subject.beds) > 1) return false;
+    if (Math.abs(comp.baths - subject.baths) > 1) return false;
+    if (Math.abs(CONDITIONS.indexOf(comp.condition) - CONDITIONS.indexOf(subject.condition)) > 1) return false;
+    return true;
+  }
+
+  function makeQualityComp(subject, i) {
+    for (let a = 0; a < 40; a++) {
+      const comp = makeComp(subject, i);
+      if (isQualityComp(comp, subject)) return comp;
+    }
+    return makeComp(subject, i);
+  }
+
+  function makeReplacementComp(subject, usedIds) {
+    const uid = `comp-r-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const comp = makeQualityComp(subject, usedIds.length);
+    return { ...comp, id: uid };
+  }
+
   function buildRound() {
     const subject = makeSubject();
-    const comps = Array.from({ length: 8 }, (_, i) => makeComp(subject, i));
+    const comps = Array.from({ length: 8 }, (_, i) => makeQualityComp(subject, i));
     const { estimate: est, stdev, adj } = estimate(subject, comps);
     return { subject, comps, estimate: est, stdev, adj };
   }
@@ -281,6 +305,8 @@
 
   window.Valuation = {
     buildRound, scoreFor,
+    makeReplacementComp,
+    recalculate: (subject, comps) => estimate(subject, comps),
     AMENITIES, CONDITIONS, STYLES, NEIGHBORHOODS,
     fmtDate
   };
