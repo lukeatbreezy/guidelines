@@ -101,8 +101,11 @@ function RangeSlider({
   }
   const fillBg = `linear-gradient(90deg, ${stops.join(", ")})`;
 
-  // tick stride
-  const tickStep = (max - min) > 1_200_000 ? 200_000 : (max - min) > 600_000 ? 100_000 : 50_000;
+  // tick stride — always target ~4 ticks so labels never crowd
+  const range = max - min;
+  const roughStep = range / 4;
+  const niceSteps = [25_000, 50_000, 100_000, 150_000, 200_000, 250_000, 500_000, 1_000_000];
+  const tickStep = niceSteps.find(s => s >= roughStep) ?? 1_000_000;
   const ticks = [];
   for (let v = Math.ceil(min / tickStep) * tickStep; v <= max; v += tickStep) ticks.push(v);
 
