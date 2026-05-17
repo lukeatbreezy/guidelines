@@ -47,7 +47,7 @@ function PropertyData({ p }) {
 
 function Subject({ p, tweaks }) {
   return (
-    <div className="subject" style={{ borderStyle: "none", opacity: "1", backgroundColor: "rgba(235, 229, 214, 0)", padding: "24px 0px 26px", margin: "0px 40px" }}>
+    <div className="subject" style={{ borderStyle: "none", opacity: "1", backgroundColor: "rgba(235, 229, 214, 0)", padding: "24px 0px 26px" }}>
       <div className="subject-main">
         <div className="subject-head">
           <div>
@@ -65,7 +65,7 @@ function Subject({ p, tweaks }) {
       </div>
       {tweaks.ppsfHint &&
       <div className="subject-side">
-          <div className="market-block" style={{ width: "656px" }}>
+          <div className="market-block">
             <div className="market-cap" style={{ fontSize: "12px", margin: "0px 0px 11px" }}>Market — {p.neighborhood.name}</div>
             <div className="market-ppsf">${p.neighborhood.ppsf}<span> /sqft median</span></div>
             <div className="market-vol">
@@ -538,7 +538,7 @@ function App() {
       <div className="content" style={{ padding: "24px 16px 32px", margin: "0px" }}>
         <Subject p={subject} tweaks={tweaks} />
 
-        <div style={{ width: "656px" }}>
+        <div style={{ width: "100%", minWidth: 0 }}>
           <div className="section-head">
             <h3 className="section-title">Comps
 </h3>

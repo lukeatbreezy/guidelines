@@ -1096,9 +1096,50 @@ body::before {
   .masthead { flex-wrap: wrap; row-gap: 12px; }
   .chart-body { height: 160px; }
 }
+
+/* ---- tablet ---- */
+@media (max-width: 768px) {
+  .subject-addr { font-size: 34px; }
+  .pdata { grid-template-columns: repeat(2, 1fr); gap: 10px 14px; }
+  .comps { grid-template-columns: 1fr 1fr; }
+  .chart-tab { font-size: 9.5px; padding: 6px 8px; }
+}
+
+/* ---- phone ---- */
 @media (max-width: 640px) {
-  .pdata { grid-template-columns: repeat(2, 1fr); }
-  .masthead, .dataline, .content { padding-left: 16px; padding-right: 16px; }
+  html { overflow-x: hidden; }
+  body  { overflow-x: hidden; }
+
+  .masthead { padding: 10px 14px 10px; gap: 12px; flex-wrap: nowrap; }
+  .masthead-meta { gap: 14px; }
+  .masthead-meta > div { display: flex; flex-direction: column; }
+  .masthead-meta b { font-size: 20px; margin-top: 1px; }
+  .meta-hood { font-size: 14px !important; }
+  .masthead-progress { gap: 3px; }
+  .pip { width: 14px; height: 16px; }
+
+  .content { padding: 16px 12px 24px !important; gap: 20px; }
+
+  .subject-addr { font-size: 28px; }
+  .subject-hood { font-size: 10px; }
+  .pdata { grid-template-columns: repeat(2, 1fr); gap: 8px 10px; }
+  .datarow-v { font-size: 18px; }
+  .datarow-v.is-mono { font-size: 15px; }
+
+  .comps { grid-template-columns: 1fr; }
+  .comp-price { font-size: 26px; }
+
+  .chart-body { height: 130px; }
+  .chart-tabs { flex-wrap: wrap; }
+  .chart-tab { font-size: 9px; padding: 5px 7px; }
+  .chart-yaxis { font-size: 8.5px; }
+
+  .dock { padding: 0; }
+  .dock-inner { padding: 12px 14px 16px; gap: 12px; }
+
+  .reveal { padding: 24px 18px 20px; max-width: 100%; margin: 12px; }
+  .reveal-grid { grid-template-columns: 1fr 1fr; }
+  .end-letter { font-size: 72px; }
 }
 
 /* ---------------- comp exclude + suggested ---------------- */
