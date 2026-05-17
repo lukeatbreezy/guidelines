@@ -153,7 +153,7 @@ function CompChart({ comps, highlightId, onHighlight }) {
           <div key={i} className="chart-ytick">{fmtAxis(metric, Math.round(t))}</div>
           )}
         </div>
-        <div className="chart-plot" style={{ justifyContent: "center", alignItems: "center" }}>
+        <div className="chart-plot">
           {[...ticks].reverse().map((t, i) =>
           <div key={i} className="chart-gridline" style={{ bottom: `${i === 4 ? 0 : (4 - i) * 25}%` }} />
           )}
@@ -166,11 +166,11 @@ function CompChart({ comps, highlightId, onHighlight }) {
                 className={"chart-bar-group " + (isHi ? "is-hi" : "")}
                 onMouseEnter={() => onHighlight(c.id)}
                 onMouseLeave={() => onHighlight(null)}
-                onClick={() => onHighlight(c.id)} style={{ width: "52px", gap: "2px", alignItems: "flex-end", padding: "0px" }}>
+                onClick={() => onHighlight(c.id)}>
 
                 {metric === "sale_vs_list" ?
                 <>
-                    <div className="chart-bar sale" style={{ height: `${s.a / max * 100}%`, borderRadius: "99990px", width: "14px" }}>
+                    <div className="chart-bar sale" style={{ height: `${s.a / max * 100}%`, borderRadius: "99990px" }}>
                       <span className="chart-bar-val">{fmtAxis(metric, s.a)}</span>
                     </div>
                     <div className="chart-bar list" style={{ height: `${s.b / max * 100}%`, borderRadius: "99990px", borderStyle: "none", backgroundColor: "rgb(203, 185, 175)" }}>

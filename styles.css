@@ -278,6 +278,7 @@ body::before {
 .chart-bar-group {
   position: relative;
   flex: 1;
+  min-width: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -287,13 +288,12 @@ body::before {
   border: none;
   padding: 0;
   cursor: pointer;
-  min-width: 0;
 }
 .chart-bar {
   position: relative;
   flex: 1;
-  min-width: 6px;
-  max-width: 22px;
+  min-width: 4px;
+  max-width: 20px;
   transition: filter 0.12s, transform 0.12s;
 }
 .chart-bar.sale { background: var(--accent); }
