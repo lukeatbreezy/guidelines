@@ -29,7 +29,19 @@
       "Bash(npm install *)",
       "Bash(sed -i '' \"s/guidanceBtn\\(slugify\\('/guidanceBtnFor\\('/g\" /Users/luke/dg/index.html)",
       "Bash(sed -i '' \"s/guidanceBtnFor\\('\\\\\\(.*\\\\\\)'\\)\\)/guidanceBtnFor\\('\\\\1'\\)/g\" /Users/luke/dg/index.html)",
-      "Bash(vercel --prod)"
+      "Bash(vercel --prod)",
+      "Bash(curl -sL \"https://www.figma.com/api/mcp/asset/71a4435d-0c19-4b8a-b8c4-837cbf83a16e\" -o /Users/luke/dg/landing-bg.jpg)",
+      "Bash(curl -sL \"https://www.figma.com/api/mcp/asset/646e9ffd-ada9-4d2a-a8e0-c99b2da71c81\" -o /Users/luke/dg/footer-bg.jpg)",
+      "mcp__21ab8480-382e-4d18-ba1a-731318f7f9bc__get_design_context",
+      "mcp__21ab8480-382e-4d18-ba1a-731318f7f9bc__use_figma",
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(gunzip -c \"/Users/luke/.claude/projects/-Users-luke-dg/ef5e5f0c-2d4b-4b31-b9aa-7387ef5dab94/tool-results/webfetch-1779591203432-ve0qml.bin\")",
+      "Bash(tar -x -C /tmp/design-bundle)",
+      "Read(//tmp/**)",
+      "Bash(unzip -l \"/Users/luke/Downloads/bzy3d\\(cmpjr4m8m003d01s4gqr12kjf\\).zip\")",
+      "Bash(unzip -p \"/Users/luke/Downloads/bzy3d\\(cmpjr4m8m003d01s4gqr12kjf\\).zip\" style.json)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3)"
     ]
   }
 }
