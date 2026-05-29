@@ -1,0 +1,862 @@
+/* =============================================================
+ * BREEZY DESIGN SYSTEM — colors_and_type.css
+ * Codename: BRAT
+ * -------------------------------------------------------------
+ * Self-contained foundation file: fonts + color tokens + type.
+ * Drop into any HTML: <link rel="stylesheet" href="colors_and_type.css">
+ *
+ * Structure:
+ *   1. FONTS         — @font-face for Akkurat LL TT (self-hosted)
+ *   2. RAW PALETTE   — every scale step (neutral, clay, mint, blush,
+ *                      concrete, berry, cameo) + alpha neutrals
+ *   3. DIMENSIONS    — spacing, radius, border scales
+ *   4. SHADOWS       — xs → xl elevation
+ *   5. TYPE TOKENS   — sizes, line-heights, weights, family stacks
+ *   6. SEMANTIC      — Breezy semantic tokens (light + dark modes)
+ *   7. COMPONENT     — bridge mapping (bg, text, border, accent…)
+ *   8. SEMANTIC TYPE — h1…h6, p, small, code, label, eyebrow
+ * ============================================================= */
+
+/* 1. FONTS ───────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Akkurat';
+  src: url('./fonts/AkkuratLLTT-Light.ttf') format('truetype');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Akkurat';
+  src: url('./fonts/AkkuratLLTT-LightItalic.ttf') format('truetype');
+  font-weight: 300; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Akkurat';
+  src: url('./fonts/AkkuratLLTT-Regular.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Akkurat';
+  src: url('./fonts/AkkuratLLTT-Italic.ttf') format('truetype');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Akkurat';
+  src: url('./fonts/AkkuratLLTT-Bold.ttf') format('truetype');
+  font-weight: 600 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Akkurat';
+  src: url('./fonts/AkkuratLLTT-BoldItalic.ttf') format('truetype');
+  font-weight: 600 700; font-style: italic; font-display: swap;
+}
+
+/* 2. RAW PALETTE ─────────────────────────────────────────── */
+:root {
+  /* Neutral (text, surfaces, borders) */
+  --color-neutral-0:   #ffffff;
+  --color-neutral-50:  #f7f6f5;
+  --color-neutral-100: #eeeceb;
+  --color-neutral-150: #dddad8;
+  --color-neutral-200: #cdc7c4;
+  --color-neutral-300: #bcb5b1;
+  --color-neutral-350: #aba29d;
+  --color-neutral-400: #968e89;
+  --color-neutral-600: #605b57;
+  --color-neutral-650: #433d39;
+  --color-neutral-700: #36312e;
+  --color-neutral-750: #282522;
+  --color-neutral-800: #1b1817;
+  --color-neutral-850: #0d0c0b;
+  --color-neutral-900: #070606;
+  --color-neutral-950: #000000;
+
+  /* Clay — primary brand (warm terracotta) */
+  --color-clay-50:      #faf6f5;
+  --color-clay-100:     #f4eeec;
+  --color-clay-200:     #efe5e2;
+  --color-clay-250:     #e9dcd9;
+  --color-clay-300:     #dfcbc5;
+  --color-clay-350:     #d4b9b2;
+  --color-clay-400base: #c9a89f;
+  --color-clay-500:     #a98c84;
+  --color-clay-600:     #897069;
+  --color-clay-650:     #69534d;
+  --color-clay-700:     #594540;
+  --color-clay-800:     #493732;
+  --color-clay-850:     #392925;
+  --color-clay-900:     #291b17;
+
+  /* Mint — success */
+  --color-mint-50:      #e6f1ef;
+  --color-mint-100:     #deede9;
+  --color-mint-150:     #cee3de;
+  --color-mint-200:     #bddad3;
+  --color-mint-250:     #add1c8;
+  --color-mint-300base: #90b1a9;
+  --color-mint-400:     #739189;
+  --color-mint-500:     #55716a;
+  --color-mint-600:     #47615a;
+  --color-mint-700:     #38514a;
+  --color-mint-800:     #2a413b;
+  --color-mint-900:     #1b312b;
+
+  /* Blush — error / rejected */
+  --color-blush-50:      #f5edef;
+  --color-blush-100:     #eadcdf;
+  --color-blush-150:     #e0cacf;
+  --color-blush-200:     #d6b8bf;
+  --color-blush-250:     #c1959e;
+  --color-blush-300base: #ad717e;
+  --color-blush-400:     #984e5e;
+  --color-blush-500:     #632533;
+  --color-blush-600:     #772438;
+  --color-blush-700:     #591b2a;
+  --color-blush-800:     #330f18;
+  --color-blush-900:     #24080f;
+
+  /* Concrete — info / neutral feedback */
+  --color-concrete-50:      #e9edf4;
+  --color-concrete-100:     #e1e7f0;
+  --color-concrete-150:     #d3dce9;
+  --color-concrete-200:     #c4d0e1;
+  --color-concrete-250:     #b5c4da;
+  --color-concrete-300base: #98a6bc;
+  --color-concrete-400:     #7a899e;
+  --color-concrete-500:     #5d6b81;
+  --color-concrete-600:     #4e5c72;
+  --color-concrete-700:     #3f4e63;
+  --color-concrete-800:     #313f54;
+  --color-concrete-900:     #223045;
+
+  /* Berry — accent-02 (deep purple) */
+  --color-berry-50:      #e7e0f7;
+  --color-berry-100:     #dfd6f5;
+  --color-berry-150:     #cfc2ef;
+  --color-berry-200:     #bfadea;
+  --color-berry-250:     #af99e5;
+  --color-berry-300base: #927ec5;
+  --color-berry-400:     #7663a5;
+  --color-berry-500:     #594885;
+  --color-berry-600:     #4b3b75;
+  --color-berry-700:     #3d2d65;
+  --color-berry-800:     #2e2055;
+  --color-berry-900:     #201245;
+
+  /* Cameo — accent-01 (warm golden brown / "focus ring") */
+  --color-cameo-200: #f5e4d6;
+  --color-cameo-250: #ebc9ad;
+  --color-cameo-300: #d8ae8d;
+  --color-cameo-400: #c19271;
+  --color-cameo-600: #8e5f3e;
+  --color-cameo-700: #674228;
+  --color-cameo-800: #47301f;
+
+  /* AI gradient tints (Breezy AI surfaces) */
+  --color-ai-light-tint:  #f9e2e8;
+  --color-ai-light-shade: #d7c3e5;
+  --color-ai-mid-tint:    #d5a2b9;
+  --color-ai-mid-shade:   #bba1cd;
+  --color-ai-dark-tint:   #875c69;
+  --color-ai-dark-shade:  #573a6d;
+
+  /* Alpha neutrals */
+  --color-white-a90: #ffffffe5; --color-white-a80: #ffffffcc;
+  --color-white-a60: #ffffff99; --color-white-a40: #ffffff66;
+  --color-white-a20: #ffffff33; --color-white-a0:  #ffffff00;
+  --color-black-a90: #000000e5; --color-black-a80: #000000cc;
+  --color-black-a60: #00000099; --color-black-a40: #00000066;
+  --color-black-a20: #00000033; --color-black-a0:  #00000000;
+  --color-clay-a90:  #c9a89fe5; --color-clay-a80:  #c9a89fcc;
+  --color-clay-a60:  #c9a89f99; --color-clay-a40:  #c9a89f66;
+  --color-clay-a20:  #c9a89f33; --color-clay-a0:   #c9a89f00;
+}
+
+/* 3. DIMENSIONS ──────────────────────────────────────────── */
+:root {
+  --dimension-none: 0px; --dimension-8xs: 0.5px;
+  --dimension-7xs: 1px;  --dimension-6xs: 2px;
+  --dimension-5xs: 4px;  --dimension-4xs: 8px;
+  --dimension-3xs: 12px; --dimension-2xs: 16px;
+  --dimension-xs:  20px; --dimension-sm:  24px;
+  --dimension-md:  32px; --dimension-lg:  40px;
+  --dimension-xl:  48px; --dimension-2xl: 56px;
+  --dimension-3xl: 64px; --dimension-4xl: 72px;
+  --dimension-5xl: 80px; --dimension-max: 9999px;
+
+  --padding-3xs: 1px;  --padding-2xs: 2px;
+  --padding-xs:  4px;  --padding-sm:  8px;
+  --padding-md:  12px; --padding-lg:  16px;
+  --padding-xl:  20px; --padding-2xl: 24px;
+  --padding-3xl: 32px; --padding-4xl: 40px;
+
+  --margin-xs:  4px;  --margin-sm:  8px;
+  --margin-md:  16px; --margin-lg:  24px;
+  --margin-xl:  32px; --margin-2xl: 40px;
+  --margin-3xl: 48px; --margin-4xl: 64px;
+
+  --radius-none: 0px; --radius-xs:  2px;
+  --radius-sm:   4px; --radius-md:  8px;
+  --radius-lg:   16px; --radius-xl: 24px;
+  --radius-2xl:  32px; --radius-3xl: 40px;
+  --radius-full: 9999px;
+
+  --border-thin:    0.5px; --border-regular: 1px;
+  --border-bold:    2px;   --border-heavy:   4px;
+}
+
+/* 4. SHADOWS ─────────────────────────────────────────────── */
+:root {
+  --shadow-xs: 0 1px 3px 0 #0000000d, 0 1px 2px 0 #0000001a;
+  --shadow-sm: 0 1px 3px 0 #0000000d, 0 10px 15px -5px #0000001a, 0 7px 7px -5px #0000000a;
+  --shadow-md: 0 1px 3px 0 #0000000d, 0 20px 25px -5px #0000001a, 0 10px 10px -5px #0000000a;
+  --shadow-lg: 0 1px 3px 0 #0000000d, 0 28px 23px -7px #0000001a, 0 12px 12px -7px #0000000a;
+  --shadow-xl: 0 1px 3px 0 #0000000d, 0 36px 28px -7px #0000001a, 0 17px 17px -7px #0000000a;
+}
+
+/* 5. TYPE TOKENS ─────────────────────────────────────────── */
+/* An expansive type system spanning app UI (10 → 18), editorial body
+ * (16 → 22), and marketing display (28 → 128). Sizes scale ~1.20
+ * (app) to ~1.25 (display). Line-heights tightened as sizes grow;
+ * tracking tightens with size for a modern, confident feel. */
+:root {
+  /* Font family roles — exact names from BZY Product Tokens / Typography.json */
+  --bz-font-display: 'Akkurat', -apple-system, BlinkMacSystemFont,
+                     'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --bz-font-body:    'Akkurat', -apple-system, BlinkMacSystemFont,
+                     'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --bz-font-quote:   'Instrument Serif', 'Iowan Old Style',
+                     'Palatino Linotype', Palatino, Georgia, serif;
+  --bz-font-code:    'Geist Mono', ui-monospace, SFMono-Regular,
+                     Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+  --bz-font-webfont: 'Inter Tight', -apple-system, BlinkMacSystemFont,
+                     'Segoe UI', sans-serif;
+  --bz-font-system:  'Helvetica', -apple-system, Arial, sans-serif;
+
+  /* Legacy aliases */
+  --font-sans:  var(--bz-font-body);
+  --font-mono:  var(--bz-font-code);
+  --font-serif: var(--bz-font-quote);
+
+  /* ── App UI sizes (dense interface) ── */
+  --font-size-3xs: 9px;   /* micro metadata, badges */
+  --font-size-2xs: 10px;
+  --font-size-xxs: 10px;  /* alias kept for back-compat */
+  --font-size-xs:  12px;  /* secondary ui text */
+  --font-size-sm:  14px;  /* default ui body */
+  --font-size-md:  16px;  /* reading body */
+  --font-size-lg:  18px;
+  --font-size-xl:  20px;
+  --font-size-2xl: 22px;
+  --font-size-3xl: 26px;
+
+  /* ── Display / marketing sizes ── */
+  --font-size-display-xs:  32px;
+  --font-size-display-sm:  40px;
+  --font-size-display-md:  52px;
+  --font-size-display-lg:  64px;
+  --font-size-display-xl:  80px;
+  --font-size-display-2xl: 96px;
+  --font-size-display-3xl: 128px;
+
+  /* ── Heading scale (h1 … h6) ── */
+  --font-size-h6: 13px;  --font-size-h5: 16px;
+  --font-size-h4: 20px;  --font-size-h3: 26px;
+  --font-size-h2: 36px;  --font-size-h1: 52px;
+
+  /* ── Line heights ── */
+  --line-height-3xs: 12px;  --line-height-2xs: 14px;
+  --line-height-xxs: 14px;  /* alias */
+  --line-height-xs:  16px;  --line-height-sm:  20px;
+  --line-height-md:  24px;  --line-height-lg:  28px;
+  --line-height-xl:  30px;  --line-height-2xl: 32px;
+  --line-height-3xl: 36px;
+
+  --line-height-display-xs:  1.15;
+  --line-height-display-sm:  1.1;
+  --line-height-display-md:  1.05;
+  --line-height-display-lg:  1.02;
+  --line-height-display-xl:  1.0;
+  --line-height-display-2xl: 0.96;
+  --line-height-display-3xl: 0.94;
+
+  --line-height-h6: 18px;  --line-height-h5: 22px;
+  --line-height-h4: 26px;  --line-height-h3: 32px;
+  --line-height-h2: 42px;  --line-height-h1: 56px;
+
+  /* ── Weights — Akkurat "bold" TTF covers 600–700 via range ── */
+  /* Weight tokens — values from BZY Product Tokens / Typography.json
+     (Akkurat-LL-TT variable axis values, mapped 1:1) */
+  --bz-font-weight-thin:    150;
+  --bz-font-weight-light:   250;
+  --bz-font-weight-regular: 350;
+  --bz-font-weight-bold:    500;
+  --bz-font-weight-heavy:   800;
+
+  /* Legacy CSS-standard weight aliases (snap to nearest installed Akkurat face) */
+  --font-weight-light:    300;
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  /* ── Tracking — tighter as text grows, looser as it shrinks ── */
+  --tracking-mega:    -0.04em;  /* 80px+ display */
+  --tracking-display: -0.03em;  /* 40–72px */
+  --tracking-tight:   -0.02em;  /* 24–36px headings */
+  --tracking-snug:    -0.01em;  /* 18–22px */
+  --tracking-normal:  0;
+  --tracking-wide:    0.02em;   /* small caption */
+  --tracking-label:   0.06em;   /* uppercase labels */
+  --tracking-eyebrow: 0.08em;   /* eyebrow / caps */
+  --tracking-mono:    -0.01em;
+
+  /* ── Paragraph measure (max-width) ── */
+  --measure-narrow: 36ch;
+  --measure-normal: 62ch;
+  --measure-wide:   78ch;
+
+  /* ── Motion ── */
+  --duration-fast:   120ms;
+  --duration-normal: 200ms;
+  --duration-slow:   320ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --easing-out:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 5b. FONT SCALE PACKS ───────────────────────────────────
+   Three packs total. Only font-size + line-height change;
+   weights, tracking, family, and every non-type token stay
+   shared across all packs.
+
+   Usage: <html data-font-pack="mobile">
+          <html data-font-pack="print">
+          (omit for web — it's the base)
+
+   Pack philosophy:
+     • web     (default) responsive, 16 body base
+     • mobile  iOS & Android native — tighter, 15 body base
+     • print   A4 / US Letter PDF export — 11pt body
+
+   Proposed values — sign-off pending from platform designers.
+───────────────────────────────────────────────────────── */
+
+/* — mobile (iOS + Android) — */
+[data-font-pack='mobile'] {
+  --font-size-3xs: 9px;
+  --font-size-2xs: 10px;
+  --font-size-xxs: 10px;
+  --font-size-xs:  11px;
+  --font-size-sm:  13px;
+  --font-size-md:  15px;   /* body */
+  --font-size-lg:  17px;
+  --font-size-xl:  19px;
+  --font-size-2xl: 22px;
+  --font-size-3xl: 26px;
+
+  --font-size-h6: 13px; --font-size-h5: 15px;
+  --font-size-h4: 20px; --font-size-h3: 22px;
+  --font-size-h2: 28px; --font-size-h1: 34px;
+
+  --line-height-xs: 14px; --line-height-sm: 18px;
+  --line-height-md: 20px; --line-height-lg: 22px;
+  --line-height-xl: 24px; --line-height-2xl: 28px;
+  --line-height-3xl: 32px;
+
+  --line-height-h6: 18px; --line-height-h5: 20px;
+  --line-height-h4: 25px; --line-height-h3: 28px;
+  --line-height-h2: 34px; --line-height-h1: 41px;
+}
+
+/* — print (A4 / US Letter) —
+   Values given in px but authored as pt equivalents
+   (1pt ≈ 1.333px at 96dpi). Body = 11pt, h1 = 28pt.
+
+   NOTE: authored as a shared declaration block, applied via
+   BOTH an attribute selector AND @media print. We use a CSS
+   custom property "bag" trick: declare the values once in a
+   var, then apply them in each context. Keeping it simple:
+   explicit duplication below. If values change, update both. */
+[data-font-pack='print'] {
+  --font-size-3xs: 8px;    /* ~6pt footnote floor */
+  --font-size-2xs: 9px;    /* ~7pt */
+  --font-size-xxs: 9px;
+  --font-size-xs:  11px;   /* ~8pt caption */
+  --font-size-sm:  13px;   /* ~10pt secondary */
+  --font-size-md:  15px;   /* ~11pt body */
+  --font-size-lg:  16px;   /* ~12pt */
+  --font-size-xl:  19px;   /* ~14pt */
+  --font-size-2xl: 21px;   /* ~16pt */
+  --font-size-3xl: 24px;   /* ~18pt */
+
+  --font-size-h6: 12px; --font-size-h5: 14px;
+  --font-size-h4: 17px; --font-size-h3: 21px;
+  --font-size-h2: 27px; --font-size-h1: 37px;   /* ~28pt display */
+
+  --line-height-xs: 14px; --line-height-sm: 18px;
+  --line-height-md: 22px; --line-height-lg: 24px;  /* generous leading for print */
+  --line-height-xl: 26px; --line-height-2xl: 28px;
+  --line-height-3xl: 32px;
+
+  --line-height-h6: 16px; --line-height-h5: 20px;
+  --line-height-h4: 24px; --line-height-h3: 28px;
+  --line-height-h2: 34px; --line-height-h1: 44px;
+}
+@media print {
+  :root {
+    --font-size-3xs: 8px;
+    --font-size-2xs: 9px;
+    --font-size-xxs: 9px;
+    --font-size-xs:  11px;
+    --font-size-sm:  13px;
+    --font-size-md:  15px;
+    --font-size-lg:  16px;
+    --font-size-xl:  19px;
+    --font-size-2xl: 21px;
+    --font-size-3xl: 24px;
+
+    --font-size-h6: 12px; --font-size-h5: 14px;
+    --font-size-h4: 17px; --font-size-h3: 21px;
+    --font-size-h2: 27px; --font-size-h1: 37px;
+
+    --line-height-xs: 14px; --line-height-sm: 18px;
+    --line-height-md: 22px; --line-height-lg: 24px;
+    --line-height-xl: 26px; --line-height-2xl: 28px;
+    --line-height-3xl: 32px;
+
+    --line-height-h6: 16px; --line-height-h5: 20px;
+    --line-height-h4: 24px; --line-height-h3: 28px;
+    --line-height-h2: 34px; --line-height-h1: 44px;
+  }
+}
+
+
+/* 6. SEMANTIC TOKENS — LIGHT (default) ─────────────────────
+   Source: BZY Product Tokens — Light.tokens.json (Style Dictionary).
+   Path mirrors the JSON exactly:
+     color.foreground.*   → --bz-fg-*
+     color.background.*   → --bz-bg-*
+     color.interactive.*  → --bz-interactive-*
+     color.border.*       → --bz-border-*
+     color.fixed.*        → --bz-fixed-*
+     color.ai.background  → --bz-ai-*
+     color.ai.foreground  → --bz-ai-*-deep
+
+   (JSON uses "foregeound" — typo preserved as a known source quirk;
+    code-side spelling is corrected to "foreground".)
+───────────────────────────────────────────────────────────── */
+:root, [data-theme='light'] {
+  /* foreground/* */
+  --bz-fg-primary:   var(--color-neutral-900); /* primitives.neutral.darker  #070606 */
+  --bz-fg-secondary: var(--color-neutral-700); /* primitives.neutral.bold    #36312E */
+  --bz-fg-tertiary:  var(--color-neutral-600); /* primitives.neutral.strong  #605B57 */
+  --bz-fg-inverse:   var(--color-neutral-0);   /* primitives.neutral.lightest #FFFFFF */
+  --bz-fg-disabled:  var(--color-neutral-600); /* primitives.neutral.strong  #605B57 */
+  --bz-fg-accent:    var(--color-clay-600);    /* primitives.secondary.lightest #897069 */
+  --bz-fg-success:   var(--color-mint-800);    /* feedback.success.bold      #2A413B */
+  --bz-fg-error:     var(--color-blush-700);   /* feedback.issue.bold        #591B2A */
+  --bz-fg-info:      var(--color-concrete-900);/* feedback.info.dark         #223045 */
+
+  /* background/* */
+  --bz-bg-base:           var(--color-clay-300);    /* primary.strong   #DFCBC5 */
+  --bz-bg-plus-1:         var(--color-clay-200);    /* primary.light    #EFE5E2 */
+  --bz-bg-plus-2:         var(--color-clay-50);     /* primary.lightest #FAF6F5 */
+  --bz-bg-minus-1:        var(--color-clay-400base);/* primary.bold-base #C9A89F */
+  --bz-bg-minus-2:        var(--color-clay-500);    /* primary.dark     #A98C84 */
+  --bz-bg-overlay:        rgba(0,0,0,0.6);          /* neutral.alpha.dark.darkest-a60 */
+  --bz-bg-success:        var(--color-mint-50);     /* feedback.success.lightest (mint scale 50 = #E6F1EF; closest preset is mint-150 → use 150 var) */
+  --bz-bg-error:          var(--color-blush-150);   /* feedback.issue.lightest    #E0CACF */
+  --bz-bg-info:           var(--color-concrete-150);/* feedback.info.lightest     #D3DCE9 */
+  --bz-bg-inverse-base:   var(--color-clay-850);    /* secondary.bold   #392925 */
+  --bz-bg-inverse-plus-1: var(--color-clay-900);    /* secondary.dark   #291B17 */
+  --bz-bg-inverse-minus-1:var(--color-clay-800);    /* secondary.strong #493732 */
+
+  /* interactive/* */
+  --bz-interactive-primary:           var(--color-neutral-900); /* neutral.darker   #070606 */
+  --bz-interactive-secondary:         var(--color-clay-600);    /* secondary.lightest #897069 */
+  --bz-interactive-tertiary:          var(--color-clay-300);    /* primary.strong   #DFCBC5 */
+  --bz-interactive-applied:           var(--color-mint-200);    /* feedback.success.light #BDDAD3 */
+  --bz-interactive-rejected:          var(--color-blush-250);   /* feedback.issue.light  #C1959E */
+  --bz-interactive-info:              var(--color-concrete-250);/* feedback.info.light   #B5C4DA */
+  --bz-interactive-disabled:          var(--color-neutral-350); /* neutral.medium   #ABA29D */
+  --bz-interactive-inverse:           var(--color-neutral-0);   /* neutral.lightest #FFFFFF */
+  --bz-interactive-inverse-secondary: var(--color-neutral-200); /* neutral.light    #CDC7C4 */
+  --bz-interactive-hover:             rgba(0,0,0,0.2);          /* neutral.alpha.dark.darkest-a20 */
+  --bz-interactive-highlight:         var(--color-cameo-400);   /* accent-01.medium  #C19271 */
+
+  /* border/* */
+  --bz-border-light:      var(--color-neutral-200); /* neutral.light   #CDC7C4 */
+  --bz-border-medium:     var(--color-neutral-350); /* neutral.medium  #ABA29D */
+  --bz-border-strong:     var(--color-neutral-600); /* neutral.strong  #605B57 */
+  --bz-border-strongest:  var(--color-neutral-850); /* neutral.dark    #0D0C0B */
+  --bz-border-success:    var(--color-mint-500);    /* feedback.success.strong #55716A */
+  --bz-border-error:      var(--color-blush-500);   /* feedback.issue.strong   #632533 */
+  --bz-border-info:       var(--color-concrete-700);/* feedback.info.bold      #3F4E63 */
+
+  /* fixed/* — identical across light & dark */
+  --bz-fixed-text:            var(--color-neutral-900); /* neutral.darker   #070606 */
+  --bz-fixed-surface:         var(--color-clay-300);    /* primary.strong   #DFCBC5 */
+  --bz-fixed-text-inverse:    var(--color-clay-50);     /* primary.lightest #FAF6F5 */
+  --bz-fixed-surface-inverse: var(--color-clay-850);    /* secondary.bold   #392925 */
+
+  /* ai/* — background tints + matching deep foregrounds */
+  --bz-ai-tulum:      #CFE9DE;
+  --bz-ai-seoul:      #A6B0F3;
+  --bz-ai-tokyo:      #F7B6C3;
+  --bz-ai-milan:      #E4C6BB;
+  --bz-ai-tulum-deep: #2D7176;
+  --bz-ai-seoul-deep: #4F589C;
+  --bz-ai-tokyo-deep: #903C85;
+  --bz-ai-milan-deep: #7A635C;
+}
+
+/* SEMANTIC TOKENS — DARK ───────────────────────────────────── */
+[data-theme='dark'] {
+  --bz-fg-primary:   var(--color-neutral-0);   /* lightest #FFFFFF */
+  --bz-fg-secondary: var(--color-neutral-200); /* light    #CDC7C4 */
+  --bz-fg-tertiary:  var(--color-neutral-350); /* medium   #ABA29D */
+  --bz-fg-inverse:   var(--color-neutral-950); /* darkest  #000000 */
+  --bz-fg-disabled:  var(--color-neutral-350); /* medium   #ABA29D */
+  --bz-fg-accent:    var(--color-clay-400base);/* bold-base #C9A89F */
+  --bz-fg-success:   var(--color-mint-200);    /* success.light  #BDDAD3 */
+  --bz-fg-error:     var(--color-blush-250);   /* issue.light    #C1959E */
+  --bz-fg-info:      var(--color-concrete-250);/* info.light     #B5C4DA */
+
+  --bz-bg-base:           var(--color-neutral-850); /* neutral.dark    #0D0C0B */
+  --bz-bg-plus-1:         var(--color-neutral-750); /* neutral.bolder  #282522 */
+  --bz-bg-plus-2:         var(--color-neutral-700); /* neutral.bold    #36312E */
+  --bz-bg-minus-1:        var(--color-neutral-900); /* neutral.darker  #070606 */
+  --bz-bg-minus-2:        var(--color-neutral-950); /* neutral.darkest #000000 */
+  --bz-bg-overlay:        rgba(0,0,0,0.6);
+  --bz-bg-success:        var(--color-mint-900);    /* success.dark  #1B312B */
+  --bz-bg-error:          var(--color-blush-800);   /* issue.dark    #330F18 */
+  --bz-bg-info:           var(--color-concrete-700);/* info.bold     #3F4E63 */
+  --bz-bg-inverse-base:   var(--color-clay-650);    /* secondary.light  #69534D */
+  --bz-bg-inverse-plus-1: var(--color-clay-700);    /* secondary.medium #594540 */
+  --bz-bg-inverse-minus-1:var(--color-clay-600);    /* secondary.lightest #897069 */
+
+  --bz-interactive-primary:           var(--color-neutral-100); /* neutral.lighter   #EEECEB */
+  --bz-interactive-secondary:         var(--color-clay-350);    /* primary.stronger  #D4B9B2 */
+  --bz-interactive-tertiary:          var(--color-clay-650);    /* secondary.light   #69534D */
+  --bz-interactive-applied:           var(--color-mint-800);    /* success.bold      #2A413B (mapped via 800) */
+  --bz-interactive-rejected:          var(--color-blush-700);   /* issue.bold        #591B2A */
+  --bz-interactive-info:              var(--color-concrete-700);/* info.bold         #3F4E63 */
+  --bz-interactive-disabled:          var(--color-neutral-600); /* neutral.strong    #605B57 */
+  --bz-interactive-inverse:           var(--color-neutral-950); /* neutral.darkest   #000000 */
+  --bz-interactive-inverse-secondary: var(--color-neutral-850); /* neutral.dark      #0D0C0B */
+  --bz-interactive-hover:             rgba(255,255,255,0.2);    /* neutral.alpha.light.lightest-a20 */
+  --bz-interactive-highlight:         var(--color-cameo-250);   /* accent-01.light   #EBC9AD */
+
+  --bz-border-light:     var(--color-neutral-750); /* bolder   #282522 */
+  --bz-border-medium:    var(--color-neutral-650); /* stronger #433D39 */
+  --bz-border-strong:    var(--color-neutral-350); /* medium   #ABA29D */
+  --bz-border-strongest: var(--color-neutral-200); /* light    #CDC7C4 */
+  --bz-border-success:   var(--color-mint-250);    /* success.medium  #ADD1C8 */
+  --bz-border-error:     var(--color-blush-300base);/* issue.medium    #AD717E */
+  --bz-border-info:      var(--color-concrete-300base);/* info.medium #98A6BC */
+
+  /* fixed/* stays identical */
+  --bz-fixed-text:            var(--color-neutral-900);
+  --bz-fixed-surface:         var(--color-clay-300);
+  --bz-fixed-text-inverse:    var(--color-clay-50);
+  --bz-fixed-surface-inverse: var(--color-clay-850);
+
+  /* AI is identical too — the gradient pairings work both ways */
+  --bz-ai-tulum:      #CFE9DE;
+  --bz-ai-seoul:      #A6B0F3;
+  --bz-ai-tokyo:      #F7B6C3;
+  --bz-ai-milan:      #E4C6BB;
+  --bz-ai-tulum-deep: #2D7176;
+  --bz-ai-seoul-deep: #4F589C;
+  --bz-ai-tokyo-deep: #903C85;
+  --bz-ai-milan-deep: #7A635C;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Legacy aliases — old --bz-text-* / --bz-surface-* names map
+   to the new --bz-fg-* / --bz-bg-* tokens. Older preview files
+   keep working; new code should use the new names.
+───────────────────────────────────────────────────────────── */
+:root, [data-theme='light'], [data-theme='dark'] {
+  --bz-text-primary:   var(--bz-fg-primary);
+  --bz-text-secondary: var(--bz-fg-secondary);
+  --bz-text-tertiary:  var(--bz-fg-tertiary);
+  --bz-text-inverse:   var(--bz-fg-inverse);
+  --bz-text-disabled:  var(--bz-fg-disabled);
+  --bz-text-success:   var(--bz-fg-success);
+  --bz-text-error:     var(--bz-fg-error);
+  --bz-text-info:      var(--bz-fg-info);
+
+  --bz-surface-base:           var(--bz-bg-base);
+  --bz-surface-plus-1:         var(--bz-bg-plus-1);
+  --bz-surface-plus-2:         var(--bz-bg-plus-2);
+  --bz-surface-minus-1:        var(--bz-bg-minus-1);
+  --bz-surface-minus-2:        var(--bz-bg-minus-2);
+  --bz-surface-overlay:        var(--bz-bg-overlay);
+  --bz-surface-success:        var(--bz-bg-success);
+  --bz-surface-error:          var(--bz-bg-error);
+  --bz-surface-info:           var(--bz-bg-info);
+  --bz-surface-inverse-base:   var(--bz-bg-inverse-base);
+  --bz-surface-inverse-plus-1: var(--bz-bg-inverse-plus-1);
+  --bz-surface-inverse-minus-1:var(--bz-bg-inverse-minus-1);
+
+  /* Old --breezy-* aliases (even older) */
+  --breezy-text-primary:   var(--bz-fg-primary);
+  --breezy-text-secondary: var(--bz-fg-secondary);
+  --breezy-text-tertiary:  var(--bz-fg-tertiary);
+  --breezy-text-inverse:   var(--bz-fg-inverse);
+  --breezy-text-disabled:  var(--bz-fg-disabled);
+  --breezy-text-success:   var(--bz-fg-success);
+  --breezy-text-error:     var(--bz-fg-error);
+  --breezy-text-info:      var(--bz-fg-info);
+  --breezy-surface-base:         var(--bz-bg-base);
+  --breezy-surface-1:            var(--bz-bg-plus-1);
+  --breezy-surface-2:            var(--bz-bg-plus-2);
+  --breezy-surface-overlay:      var(--bz-bg-overlay);
+  --breezy-surface-success:      var(--bz-bg-success);
+  --breezy-surface-error:        var(--bz-bg-error);
+  --breezy-surface-info:         var(--bz-bg-info);
+  --breezy-surface-inverse-base: var(--bz-bg-inverse-base);
+  --breezy-surface-inverse-1:    var(--bz-bg-inverse-plus-1);
+  --breezy-interactive-primary:           var(--bz-interactive-primary);
+  --breezy-interactive-secondary:         var(--bz-interactive-secondary);
+  --breezy-interactive-tertiary:          var(--bz-interactive-tertiary);
+  --breezy-interactive-applied:           var(--bz-interactive-applied);
+  --breezy-interactive-rejected:          var(--bz-interactive-rejected);
+  --breezy-interactive-disabled:          var(--bz-interactive-disabled);
+  --breezy-interactive-inverse:           var(--bz-interactive-inverse);
+  --breezy-interactive-inverse-secondary: var(--bz-interactive-inverse-secondary);
+}
+
+
+/* 7. COMPONENT BRIDGE ────────────────────────────────────── */
+:root, [data-theme='light'] {
+  --bg-canvas:        #faf6f5;
+  --bg-surface:       #ffffff;
+  --bg-surface-alt:   #efe5e2;
+  --bg-surface-hover: #e9dcd9;
+  --bg-inset:         #f4eeec;
+
+  --fg1: var(--breezy-text-primary);
+  --fg2: var(--breezy-text-secondary);
+  --fg3: var(--breezy-text-tertiary);
+  --fg-muted: var(--breezy-text-tertiary);
+  --fg-disabled: var(--breezy-text-disabled);
+  --fg-on-accent: var(--breezy-text-inverse);
+
+  --border-subtle:  #dddad8;
+  --border-default: #cdc7c4;
+  --border-strong:  #bcb5b1;
+  --border-focus:   #674228;
+
+  --accent-subtle:  #efe5e2;
+  --accent-soft:    #e9dcd9;
+  --accent-default: #070606;
+  --accent-hover:   #282522;
+  --accent-active:  #36312e;
+
+  --success-subtle:  #deede9;
+  --success-default: #47615a;
+  --success-hover:   #38514a;
+  --success-text:    #2a413b;
+
+  --danger-subtle:  #eadcdf;
+  --danger-default: #632533;
+  --danger-hover:   #591b2a;
+  --danger-text:    #591b2a;
+
+  --warning-subtle:  #fff9db;
+  --warning-default: #fab005;
+  --warning-hover:   #f59f00;
+  --warning-text:    #e67700;
+
+  --elevation-low:    var(--shadow-xs);
+  --elevation-medium: var(--shadow-sm);
+  --elevation-high:   var(--shadow-md);
+}
+
+[data-theme='dark'] {
+  --bg-canvas:        #000000;
+  --bg-surface:       #0d0c0b;
+  --bg-surface-alt:   #070606;
+  --bg-surface-hover: #493732;
+  --bg-inset:         #0d0c0b;
+
+  --border-subtle:  #1b1817;
+  --border-default: #282522;
+  --border-strong:  #36312e;
+  --border-focus:   #c19271;
+
+  --accent-default: #eeeceb;
+  --accent-hover:   #ffffff;
+  --accent-active:  #cdc7c4;
+}
+
+/* 8. SEMANTIC TYPE (element defaults + helpers) ──────────── */
+html, body {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-regular);
+  color: var(--fg1);
+  background: var(--bg-canvas);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, .h1 {
+  font: var(--font-weight-light) var(--font-size-h1) / var(--line-height-h1) var(--font-sans);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg1); margin: 0; text-wrap: balance;
+}
+h2, .h2 {
+  font: var(--font-weight-light) var(--font-size-h2) / var(--line-height-h2) var(--font-sans);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg1); margin: 0; text-wrap: balance;
+}
+h3, .h3 {
+  font: var(--font-weight-light) var(--font-size-h3) / var(--line-height-h3) var(--font-sans);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg1); margin: 0;
+}
+h4, .h4 {
+  font: var(--font-weight-light) var(--font-size-h4) / var(--line-height-h4) var(--font-sans);
+  letter-spacing: var(--tracking-snug);
+  color: var(--fg1); margin: 0;
+}
+h5, .h5 {
+  font: var(--font-weight-semibold) var(--font-size-h5) / var(--line-height-h5) var(--font-sans);
+  color: var(--fg1); margin: 0;
+}
+h6, .h6 {
+  font: var(--font-weight-semibold) var(--font-size-h6) / var(--line-height-h6) var(--font-sans);
+  letter-spacing: var(--tracking-wide);
+  color: var(--fg1); margin: 0;
+}
+
+/* Display / marketing — use <h1 class="display display-lg">…</h1> */
+.display {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-light);
+  color: var(--fg1);
+  margin: 0;
+  text-wrap: balance;
+}
+.display-xs  { font-size: var(--font-size-display-xs);  line-height: var(--line-height-display-xs);  letter-spacing: var(--tracking-tight); }
+.display-sm  { font-size: var(--font-size-display-sm);  line-height: var(--line-height-display-sm);  letter-spacing: var(--tracking-display); }
+.display-md  { font-size: var(--font-size-display-md);  line-height: var(--line-height-display-md);  letter-spacing: var(--tracking-display); }
+.display-lg  { font-size: var(--font-size-display-lg);  line-height: var(--line-height-display-lg);  letter-spacing: var(--tracking-display); }
+.display-xl  { font-size: var(--font-size-display-xl);  line-height: var(--line-height-display-xl);  letter-spacing: var(--tracking-mega); }
+.display-2xl { font-size: var(--font-size-display-2xl); line-height: var(--line-height-display-2xl); letter-spacing: var(--tracking-mega); }
+.display-3xl { font-size: var(--font-size-display-3xl); line-height: var(--line-height-display-3xl); letter-spacing: var(--tracking-mega); }
+.display-bold    { font-weight: var(--font-weight-bold); }
+.display-regular { font-weight: var(--font-weight-regular); }
+
+/* Body scale */
+p, .body, .body-md {
+  font: var(--font-weight-regular) var(--font-size-md) / var(--line-height-md) var(--font-sans);
+  color: var(--fg1); margin: 0; text-wrap: pretty;
+}
+.body-lead {
+  font: var(--font-weight-regular) var(--font-size-2xl) / var(--line-height-2xl) var(--font-sans);
+  letter-spacing: var(--tracking-snug);
+  color: var(--fg1); margin: 0; text-wrap: pretty;
+  max-width: var(--measure-normal);
+}
+.body-lg  { font-size: var(--font-size-lg); line-height: var(--line-height-lg); }
+.body-sm  { font-size: var(--font-size-sm); line-height: var(--line-height-sm); }
+.body-xs  { font-size: var(--font-size-xs); line-height: var(--line-height-xs); color: var(--fg3); }
+.body-xxs { font-size: var(--font-size-2xs); line-height: var(--line-height-2xs); color: var(--fg3); letter-spacing: var(--tracking-wide); }
+
+.measure-narrow { max-width: var(--measure-narrow); }
+.measure        { max-width: var(--measure-normal); }
+.measure-wide   { max-width: var(--measure-wide); }
+
+small, .small {
+  font-size: var(--font-size-xs); line-height: var(--line-height-xs); color: var(--fg3);
+}
+
+/* Overline / eyebrow / label */
+.overline {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg3);
+  line-height: var(--line-height-2xs);
+}
+.eyebrow, .label-caps {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg3);
+}
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--fg2);
+}
+
+/* Specialty */
+.quote, blockquote {
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-2xl);
+  font-style: italic;
+  letter-spacing: var(--tracking-snug);
+  color: var(--fg1); margin: 0; text-wrap: pretty;
+}
+.quote-lg { font-size: var(--font-size-display-xs); line-height: var(--line-height-display-xs); }
+
+.numeric, .tabular { font-variant-numeric: tabular-nums; }
+.price {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-tight);
+  font-variant-numeric: tabular-nums;
+}
+.address {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-regular);
+  color: var(--fg2);
+}
+
+/* Link */
+a, .link {
+  color: var(--fg1);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+  transition: text-decoration-color var(--duration-fast) var(--easing-standard);
+}
+a:hover, .link:hover { text-decoration-color: currentColor; }
+
+/* Mono / code */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  letter-spacing: var(--tracking-mono);
+}
+.mono-sm { font-family: var(--font-mono); font-size: var(--font-size-xs); letter-spacing: var(--tracking-mono); }
+
+/* Utilities */
+.font-light    { font-weight: var(--font-weight-light); }
+.font-regular  { font-weight: var(--font-weight-regular); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold     { font-weight: var(--font-weight-bold); }
+.italic        { font-style: italic; }
+.tracking-tight   { letter-spacing: var(--tracking-tight); }
+.tracking-display { letter-spacing: var(--tracking-display); }
+.tracking-mega    { letter-spacing: var(--tracking-mega); }
+.tracking-wide    { letter-spacing: var(--tracking-wide); }
+.tracking-label   { letter-spacing: var(--tracking-label); }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.balance  { text-wrap: balance; }
+.pretty   { text-wrap: pretty; }

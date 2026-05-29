@@ -10,9 +10,6 @@
     @font-face { font-family: 'Akkurat'; src: url('fonts/AkkuratLLTT-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; }
     @font-face { font-family: 'Akkurat'; src: url('fonts/AkkuratLLTT-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
   </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -42,94 +39,24 @@
 
     /* ── UPLOAD SCREEN ─────────────────────────────────────────── */
     #screen-upload {
-      flex-direction: row;
-      align-items: stretch;
-      min-height: 100vh;
-      padding: 0;
-    }
-
-    /* Left photo panel */
-    .upload-left {
-      width: 43.3%;
-      min-height: 100vh;
-      position: relative;
-      display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .upload-left-photo {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .upload-left-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(129.16deg, #efe5e2 0%, #d6b8bf 77.83%);
-      mix-blend-mode: multiply;
-    }
-    .upload-left-content {
-      position: relative;
-      z-index: 1;
-      padding: 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .upload-logo { width: 40px; height: 40px; flex-shrink: 0; display: block; }
-    .upload-heading {
-      font-size: 46px;
-      line-height: 1.2;
-      color: white;
-    }
-    .upload-heading-regular {
-      font-family: 'Instrument Serif', serif;
-      font-style: normal;
-      font-weight: 400;
-    }
-    .upload-heading-italic {
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      font-weight: 400;
-    }
-
-    /* Right form panel */
-    .upload-right {
-      flex: 1;
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 80px;
-      min-height: 100vh;
-    }
-    .upload-titles {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      width: 100%;
-    }
-    .upload-title-text {
-      font-size: 26px;
-      font-weight: 300;
-      letter-spacing: -1.04px;
-      line-height: 1.2;
-      color: var(--text);
-      text-align: center;
-      width: 100%;
-    }
-    .upload-form-wrap {
-      flex: 1;
-      display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      padding: 48px 24px;
     }
-    .upload-form { width: 272px; display: flex; flex-direction: column; gap: 16px; }
+
+    .logo-mark { width: 48px; height: 48px; margin-bottom: 40px; }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 200;
+      letter-spacing: -0.36px;
+      line-height: 42px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .upload-form { width: 100%; max-width: 310px; display: flex; flex-direction: column; gap: 16px; }
 
     .field-group { display: flex; flex-direction: column; gap: 4px; }
     .field-label { font-size: 12px; color: var(--tertiary); letter-spacing: 0.12px; line-height: 16px; }
@@ -296,36 +223,7 @@
       display: flex; flex-direction: column; align-items: center;
       gap: 16px; margin-bottom: 40px; text-align: center;
     }
-    .results-address { font-size: 26px; font-weight: 300; letter-spacing: -0.13px; line-height: 1.2; }
-
-    /* ── FOOTER ──────────────────────────────────────────────── */
-    .results-footer {
-      border-radius: 32px;
-      overflow: hidden;
-      position: relative;
-      margin-top: 24px;
-    }
-    .results-footer-photo {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .results-footer-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(164.11deg, #efe5e2 0%, #d6b8bf 77.83%);
-      mix-blend-mode: multiply;
-    }
-    .results-footer-content {
-      position: relative;
-      z-index: 1;
-      padding: 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .results-address { font-size: 36px; font-weight: 300; letter-spacing: -0.36px; line-height: 42px; }
 
     .btn-ghost {
       background: none; border: none; cursor: pointer;
@@ -625,16 +523,6 @@
 
     /* ── RESPONSIVE ────────────────────────────────────────────── */
     @media (max-width: 960px) {
-      /* Upload screen stacks vertically */
-      #screen-upload { flex-direction: column; }
-      .upload-left { width: 100%; min-height: 300px; }
-      .upload-left-content { padding: 48px; }
-      .upload-heading { font-size: 36px; }
-      .upload-right { padding: 48px 24px; min-height: auto; }
-      .upload-form-wrap { padding: 40px 0; flex: none; }
-      .upload-form { width: 100%; max-width: 320px; }
-
-      /* Results */
       .results-inner { padding: 48px 24px 80px; }
       .qc-full { grid-template-columns: 1fr; }
       .qc-left { grid-column: 1; }
@@ -650,8 +538,6 @@
       .detail-vert-content .dg-cols { flex-direction: column; }
       .dg-col { padding: 24px; }
       .dg-col-sep { width: 100%; height: 1px; align-self: auto; }
-      .results-footer-content { padding: 48px; }
-      .results-footer-content p { font-size: 36px; }
     }
   </style>
 </head>
@@ -661,55 +547,61 @@
      SCREEN 1: UPLOAD
 ════════════════════════════════════════════════════════════ -->
 <div id="screen-upload" class="screen active">
-  <!-- Left: photo + gradient + branding -->
-  <div class="upload-left">
-    <img class="upload-left-photo" src="landing-bg.jpg" alt="" aria-hidden="true">
-    <div class="upload-left-overlay" aria-hidden="true"></div>
-    <div class="upload-left-content">
-      <!-- White logo -->
-      <svg class="upload-logo" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50.4004 0C53.4929 0.000210008 55.9998 2.50712 56 5.59961V50.4004C55.9998 53.4929 53.4929 55.9998 50.4004 56H5.59961C2.50712 55.9998 0.000211137 53.4929 0 50.4004V5.59961C0.00021001 2.50712 2.50712 0.000211135 5.59961 0H50.4004ZM18.1514 14.6133C13.5408 14.6134 9.7998 18.3571 9.7998 22.9678V41.3867H26.5088V22.9678C26.5088 18.357 22.7621 14.6133 18.1514 14.6133ZM37.8457 14.6133C33.235 14.6133 29.4912 18.357 29.4912 22.9678V41.3867H46.2002V22.9678C46.2002 18.3571 42.4563 14.6134 37.8457 14.6133Z" fill="white"/>
+  <svg class="logo-mark" width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50.4004 0C53.4929 0.000210008 55.9998 2.50712 56 5.59961V50.4004C55.9998 53.4929 53.4929 55.9998 50.4004 56H5.59961C2.50712 55.9998 0.000211137 53.4929 0 50.4004V5.59961C0.00021001 2.50712 2.50712 0.000211135 5.59961 0H50.4004ZM18.1514 14.6133C13.5408 14.6134 9.7998 18.3571 9.7998 22.9678V41.3867H26.5088V22.9678C26.5088 18.357 22.7621 14.6133 18.1514 14.6133ZM37.8457 14.6133C33.235 14.6133 29.4912 18.357 29.4912 22.9678V41.3867H46.2002V22.9678C46.2002 18.3571 42.4563 14.6134 37.8457 14.6133Z" fill="#8B5C4E"/>
+  </svg>
+
+  <h1 class="page-title">Guidelines Builder</h1>
+
+  <div class="upload-form">
+    <div class="select-wrap">
+      <select class="input" id="scenario">
+        <option value="" selected disabled>Select a scenario</option>
+        <optgroup label="1 – Verified">
+          <option value="1a">1a – Underbuilt (Addition &amp; Teardown)</option>
+          <option value="1b">1b – Underbuilt with Max Build</option>
+        </optgroup>
+        <optgroup label="2 – Verified w Callout">
+          <option value="2a">2a – Very Underbuilt (Addition Overbuilt)</option>
+          <option value="2b">2b – Addition Overbuilt, Teardown Underbuilt</option>
+        </optgroup>
+        <optgroup label="3 – Overbuilt">
+          <option value="3">3 – Totally Overbuilt (No Potential)</option>
+        </optgroup>
+        <optgroup label="4 – Hillside">
+          <option value="4">4 – Hillside Lot (Terrain Analysis)</option>
+        </optgroup>
+        <optgroup label="5 – Pad Analysis">
+          <option value="5">5 – Hillside Lot (Pad Analysis)</option>
+        </optgroup>
+        <optgroup label="6 – AI Reports">
+          <option value="6a">6a – AI with Max Build + UB Score</option>
+          <option value="6b">6b – AI with Max Build, No Score</option>
+          <option value="6c">6c – Unsupported Zone (AI Summary)</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="file-input" accept=".pdf" />
+      <svg class="dropzone-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.667 21.333S6 21.333 6 16c0-4.667 3.96-6.667 7-6.667A6.667 6.667 0 0 1 25.333 12c0 0 .667 0 .667 2.667 0 2.666-4 6.666-4 6.666" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19.333 21.333 16 18l-3.333 3.333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16 18v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
-      <p class="upload-heading">
-        <span class="upload-heading-regular">Do it </span><span class="upload-heading-italic">differently</span>
-      </p>
+      <p class="dropzone-text dropzone-hint">Drag or click to select PDF</p>
+      <p class="dropzone-text" id="filename-label" style="display:none;word-break:break-all;"></p>
     </div>
+
+    <div class="error-msg" id="error-msg"></div>
+
+    <button class="btn" id="submit-btn" disabled>
+      <span class="btn-inner">
+        <span class="btn-spinner"></span>
+        <span id="submit-label">Let's go!</span>
+      </span>
+    </button>
   </div>
-
-  <!-- Right: form -->
-  <div class="upload-right">
-    <div class="upload-titles">
-      <p class="upload-title-text">Underbuilt Radar</p>
-      <p class="upload-title-text">Gen AI Design Guidelines</p>
-    </div>
-    <div class="upload-form-wrap">
-      <div class="upload-form">
-        <div class="dropzone" id="dropzone">
-          <input type="file" id="file-input" accept=".pdf" />
-          <svg class="dropzone-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 21V11M16 11L12 15M16 11L20 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M10 24C7.172 24 5 21.828 5 19C5 16.538 6.667 14.462 9 14.062C9 10.172 12.172 7 16 7C19.828 7 23 10.172 23 14C25 14.333 27 16 27 19C27 21.657 25 24 22 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <p class="dropzone-text dropzone-hint">Upload a PDF report</p>
-          <p class="dropzone-text" id="filename-label" style="display:none;word-break:break-all;"></p>
-        </div>
-
-        <div class="error-msg" id="error-msg"></div>
-
-        <button class="btn" id="submit-btn" disabled>
-          <span class="btn-inner">
-            <span class="btn-spinner"></span>
-            <span id="submit-label">Generate Guidelines</span>
-          </span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Hidden scenario selector (kept for API compatibility) -->
-  <select id="scenario" style="display:none;">
-    <option value="auto" selected>auto</option>
-  </select>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -1110,7 +1002,7 @@ function renderResults(data) {
   // ── Header
   html += `
     <div class="results-topbar">
-      <svg style="opacity:0.5;flex-shrink:0;" width="40" height="40" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="48" height="48" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M50.4004 0C53.4929 0.000210008 55.9998 2.50712 56 5.59961V50.4004C55.9998 53.4929 53.4929 55.9998 50.4004 56H5.59961C2.50712 55.9998 0.000211137 53.4929 0 50.4004V5.59961C0.00021001 2.50712 2.50712 0.000211135 5.59961 0H50.4004ZM18.1514 14.6133C13.5408 14.6134 9.7998 18.3571 9.7998 22.9678V41.3867H26.5088V22.9678C26.5088 18.357 22.7621 14.6133 18.1514 14.6133ZM37.8457 14.6133C33.235 14.6133 29.4912 18.357 29.4912 22.9678V41.3867H46.2002V22.9678C46.2002 18.3571 42.4563 14.6134 37.8457 14.6133Z" fill="#8B5C4E"/>
       </svg>
       <h1 class="results-address">${data.address || ''}</h1>
@@ -1470,22 +1362,6 @@ function renderResults(data) {
   if (bd.disclaimer) {
     html += `<p class="disclaimer">${bd.disclaimer}</p>`;
   }
-
-  // ── Footer
-  html += `
-    <div class="results-footer">
-      <img class="results-footer-photo" src="footer-bg.jpg" alt="" aria-hidden="true">
-      <div class="results-footer-overlay" aria-hidden="true"></div>
-      <div class="results-footer-content">
-        <svg style="flex-shrink:0;" width="40" height="40" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50.4004 0C53.4929 0.000210008 55.9998 2.50712 56 5.59961V50.4004C55.9998 53.4929 53.4929 55.9998 50.4004 56H5.59961C2.50712 55.9998 0.000211137 53.4929 0 50.4004V5.59961C0.00021001 2.50712 2.50712 0.000211135 5.59961 0H50.4004ZM18.1514 14.6133C13.5408 14.6134 9.7998 18.3571 9.7998 22.9678V41.3867H26.5088V22.9678C26.5088 18.357 22.7621 14.6133 18.1514 14.6133ZM37.8457 14.6133C33.235 14.6133 29.4912 18.357 29.4912 22.9678V41.3867H46.2002V22.9678C46.2002 18.3571 42.4563 14.6134 37.8457 14.6133Z" fill="white"/>
-        </svg>
-        <p style="font-size:46px;line-height:1.2;color:white;">
-          <span style="font-family:'Instrument Serif',serif;font-style:normal;font-weight:400;">Do it </span><span style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;">differently</span>
-        </p>
-      </div>
-    </div>
-  `;
 
   $('results-content').innerHTML = html;
 
